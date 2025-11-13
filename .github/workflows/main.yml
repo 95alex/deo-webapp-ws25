@@ -89,8 +89,8 @@ jobs:
             Deo.Frontend.Tests/packages.lock.json
       - name: set up dotnet tools
         run: |
-          dotnet tool install tool-path "${DOTNET_TOOLS_INSTALL_DIR}" dotnet-sonarscanner
-          dotnet tool install tool-path "${DOTNET_TOOLS_INSTALL_DIR}" dotnet-coverage
+          dotnet tool install --tool-path "${DOTNET_TOOLS_INSTALL_DIR}" dotnet-sonarscanner
+          dotnet tool install --tool-path "${DOTNET_TOOLS_INSTALL_DIR}" dotnet-coverage
       - name: Restore dependencies
         run: |
           dotnet restore --locked-mode Deo.Backend.Tests
