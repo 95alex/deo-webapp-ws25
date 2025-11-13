@@ -38,7 +38,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Download build artifact
-        usees: actions/download-artifact@v5
+        uses: actions/download-artifact@v5
         with:
           name: build
       - name: Setup .NET 9
