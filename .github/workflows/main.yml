@@ -80,13 +80,13 @@ jobs:
         browser: [chromium, firefox, webkit]
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Set up .NET 8
-        uses: actions/setup-dotnet@v4
+      - name: Set up .NET 9
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 8
+          dotnet-version: 9
           cache: true
           cache-dependency-path: |
             Deo.WebApp.Tests/packages.lock.json
