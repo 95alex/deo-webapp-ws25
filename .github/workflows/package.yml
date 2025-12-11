@@ -1,0 +1,47 @@
+name: packaging-Pipeline
+
+run-name: packaging triggered by ${{ github.actor }}
+
+on:
+  push:
+    tags:
+      - v*
+
+env:
+  REGISTRY: ghcr.io
+  BACKEND_IMAGE_NAME: ${{ github.repository }}-backend # deo-webapp-ws25-backend
+
+jobs:
+  build-and-push-backend-image:
+    runs-on: ubuntu-latest
+    permission:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: checkout repository code
+        uses: actions/checkout
+      - name: log in to container REGISTRY
+        uses: docker/login-action
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }
+      - name: extract metadata
+        uses: docker/metadata-action
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
+      - name: build an push images
+        uses: docker/build-push-action
+        with:
+          context: ./Deo.Backend
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      - name: generate artifact attestations
+        uses: actions/attest-build-provenance
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
