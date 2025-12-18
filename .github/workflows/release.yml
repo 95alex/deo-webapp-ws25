@@ -1,6 +1,6 @@
 name: Release Pipeline
 
-run-name: Release triggered by ${{ github.actor }} ☆*: .｡. o(≧▽≦)o
+run-name: Release triggered by ${{ github.actor }} ☆* .｡. o(≧▽≦)o
 
 on:
   push:
